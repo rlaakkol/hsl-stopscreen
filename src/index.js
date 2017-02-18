@@ -1,16 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import ApolloClient, { createNetworkInterface } from 'apollo-client';
+import { ApolloProvider } from 'react-apollo';
+import { Router, Route, browserHistory } from 'react-router';
 
 import App from './components/app';
-import rootReducer from './reducers';
+// import rootReducer from './reducers';
+
+const client = new ApolloClient({
+  networkInterface: createNetworkInterface({ uri: 'https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql' }),
+});
 
 
 ReactDOM.render(
-  <Provider store={store}>
+  <ApolloProvider client={client}>
     <Router history={browserHistory}>
       <Route path="/" component={App} />
     </Router>
-  </Provider>
+  </ApolloProvider>
   , document.querySelector('.main'));
