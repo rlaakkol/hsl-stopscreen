@@ -1,0 +1,5 @@
+src/
+test/
+README.md
+package.json
+webpack.config.js
