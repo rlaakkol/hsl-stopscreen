@@ -14,6 +14,7 @@ const App = () => {
       <DepartureList
         ids={['HSL:1040112', 'HSL:1040413', 'HSL:1040141']}
         time={time}
+        nstoptimes={2}
       />
       <Navbar
         fixedBottom

@@ -13,13 +13,18 @@ const DepartureList = (props) => {
     ? []
     : props.data.stops.reduce((acc, stop) =>
         acc.concat(
-          stop.stoptimesForPatterns.map(departure =>
-            ({
-              stop: departure.stoptimes[0].stop.name,
-              line: departure.pattern.name,
-              time: departure.stoptimes[0].serviceDay + departure.stoptimes[0].realtimeDeparture,
-              isRealtime: departure.stoptimes[0].realtime,
-            }),
+          stop.stoptimesForPatterns.reduce((acc2, departure) =>
+            acc2.concat(
+              departure.stoptimes.map(stoptime =>
+                ({
+                  stop: stoptime.stop.name,
+                  line: departure.pattern.name,
+                  time: stoptime.serviceDay + stoptime.realtimeDeparture,
+                  isRealtime: stoptime.realtime,
+                }),
+              ),
+            ),
+            [],
           ),
         ),
         [],
@@ -53,7 +58,7 @@ DepartureList.propTypes = {
 };
 
 const StopQuery = gql`
-query StopQuery($ids: [String]!, $time: Long!) {
+query StopQuery($ids: [String]!, $time: Long!, $nstoptimes: Int!) {
   stops(ids: $ids) {
     gtfsId
     name
@@ -61,7 +66,7 @@ query StopQuery($ids: [String]!, $time: Long!) {
     lon
     stoptimesForPatterns(
       startTime: $time,
-      numberOfDepartures: 1) {
+      numberOfDepartures: $nstoptimes) {
         pattern {
           name
           route {
