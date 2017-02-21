@@ -3,15 +3,27 @@ import React from 'react';
 import DeparturesByStopList from './bylist';
 
 
-const ListView = () => {
+const ListView = (props) => {
   const time = Date.now() / 1000 | 0;
+
+  const list = props.location.query.stops
+    ? props.location.query.stops.split(',')
+    : [];
 
   return (
     <DeparturesByStopList
-      ids={['HSL:1040112', 'HSL:1040413', 'HSL:1040141']}
+      ids={list}
       time={time}
       nstoptimes={2}
     />);
+};
+
+ListView.propTypes = {
+  location: React.PropTypes.shape({
+    query: React.PropTypes.shape({
+      stops: React.PropTypes.string,
+    }),
+  }),
 };
 
 export default ListView;

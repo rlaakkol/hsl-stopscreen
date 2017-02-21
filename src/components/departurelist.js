@@ -50,7 +50,8 @@ const DepartureList = (props) => {
 };
 
 DepartureList.propTypes = {
-  data: React.PropTypes.object,
+  loading: React.PropTypes.bool,
+  stops: React.PropTypes.array,
 };
 
 export default DepartureList;
