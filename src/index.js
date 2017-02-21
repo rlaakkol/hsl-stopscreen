@@ -5,6 +5,8 @@ import { ApolloProvider } from 'react-apollo';
 import { Router, Route, browserHistory } from 'react-router';
 
 import App from './components/app';
+import ListView from './components/listview';
+import LocationView from './components/locationview';
 // import rootReducer from './reducers';
 
 const client = new ApolloClient({
@@ -15,7 +17,10 @@ const client = new ApolloClient({
 ReactDOM.render(
   <ApolloProvider client={client}>
     <Router history={browserHistory}>
-      <Route path="/" component={App} />
+      <Route path="/" component={App}>
+        <Route path="/list" component={ListView} />
+        <Route path="/location" component={LocationView} />
+      </Route>
     </Router>
   </ApolloProvider>
   , document.querySelector('.main'));

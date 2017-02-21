@@ -3,9 +3,6 @@ import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { Link } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import DepartureList from './departurelist';
-
-// import * as Actions from '../actions';
 const canUseDOM = !!(
   typeof window !== 'undefined' &&
   window.document &&
@@ -44,11 +41,7 @@ class App extends Component {
         <div>
           Lat: {this.state.pos.lat}, Lon: {this.state.pos.lon}
         </div>
-        <DepartureList
-          ids={['HSL:1040112', 'HSL:1040413', 'HSL:1040141']}
-          time={this.state.time}
-          nstoptimes={2}
-        />
+        {this.props.children}
         <Navbar
           fixedBottom
         >
@@ -62,11 +55,18 @@ class App extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav>
-              <LinkContainer to="/">
+              <LinkContainer to="/list">
                 <NavItem
                   eventKey={1}
                 >
-                  Asetukset
+                  Listaa pysäkit
+                </NavItem>
+              </LinkContainer>
+              <LinkContainer to="/location">
+                <NavItem
+                  eventKey={1}
+                >
+                  Paikanna
                 </NavItem>
               </LinkContainer>
             </Nav>

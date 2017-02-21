@@ -1,13 +1,17 @@
 import React from 'react';
-import moment from 'moment';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 import { Table } from 'react-bootstrap';
+import moment from 'moment';
+
+// import * as Actions from '../actions';
 
 const DepartureList = (props) => {
   const formatTime = tstamp => moment.unix(tstamp).format('HH:mm');
 
-  const list = props.loading
+  const list = props.data.loading
     ? []
-    : props.stops.reduce((acc, stop) =>
+    : props.data.stops.reduce((acc, stop) =>
         acc.concat(
           stop.stoptimesForPatterns.reduce((acc2, departure) =>
             acc2.concat(
@@ -53,4 +57,39 @@ DepartureList.propTypes = {
   data: React.PropTypes.object,
 };
 
-export default DepartureList;
+const StopQuery = gql`
+query StopQuery($ids: [String]!, $time: Long!, $nstoptimes: Int!) {
+  stops(ids: $ids) {
+    gtfsId
+    name
+    lat
+    lon
+    stoptimesForPatterns(
+      startTime: $time,
+      numberOfDepartures: $nstoptimes) {
+        pattern {
+          name
+          route {
+            shortName
+            desc
+            agency {
+              gtfsId
+              name
+            }
+          }
+        }
+        stoptimes {
+          realtime
+          realtimeDeparture
+          scheduledDeparture
+          serviceDay
+          stop {
+            name
+          }
+        }
+      }
+    }
+  }
+`;
+
+export default graphql(StopQuery)(DepartureList);
