@@ -36,10 +36,12 @@ class LocationView extends Component {
 
   render() {
     if (!this.state.pos.lat) return null;
-    const minLat = this.state.pos.lat - 0.0005;
-    const maxLat = this.state.pos.lat + 0.0005;
-    const minLon = this.state.pos.lon - 0.0005;
-    const maxLon = this.state.pos.lon + 0.0005;
+    const maybeDia = Number.parseFloat(this.props.location.query.dia);
+    const dia = isNaN(maybeDia) ? 0.001 : maybeDia;
+    const minLat = this.state.pos.lat - (dia / 2);
+    const maxLat = this.state.pos.lat + (dia / 2);
+    const minLon = this.state.pos.lon - (dia / 2);
+    const maxLon = this.state.pos.lon + (dia / 2);
 
     return (
       <DeparturesByLocation
@@ -52,5 +54,13 @@ class LocationView extends Component {
       />);
   }
 }
+
+LocationView.propTypes = {
+  location: React.PropTypes.shape({
+    query: React.PropTypes.shape({
+      dia: React.PropTypes.string,
+    }),
+  }),
+};
 
 export default LocationView;

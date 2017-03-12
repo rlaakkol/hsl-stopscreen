@@ -5,9 +5,15 @@ import { Table } from 'react-bootstrap';
 const DepartureList = (props) => {
   const formatTime = tstamp => moment.unix(tstamp).format('HH:mm');
 
-  const list = props.loading
-    ? []
-    : props.stops.reduce((acc, stop) =>
+  if (props.loading) {
+    return (
+      <div className="center-block text-center">
+        <i className="fa fa-cog fa-spin fa-3x fa-fw" />
+        <span className="sr-only">Loading...</span>
+      </div>);
+  }
+
+  const list = props.stops.reduce((acc, stop) =>
         acc.concat(
           stop.stoptimesForPatterns.reduce((acc2, departure) =>
             acc2.concat(
@@ -43,12 +49,11 @@ const DepartureList = (props) => {
   return (
     <Table>
       <tbody>
-        {rows}
+        {rows.length > 0 ? rows : <tr><td className="text-center">Ei lähtöjä</td></tr>}
       </tbody>
     </Table>
   );
 };
-
 DepartureList.propTypes = {
   loading: React.PropTypes.bool,
   stops: React.PropTypes.array,

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import App from './components/app';
 import ListView from './components/listview';
@@ -18,6 +18,7 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <Router history={browserHistory}>
       <Route path="/" component={App}>
+        <IndexRoute component={LocationView} />
         <Route path="/list" component={ListView} />
         <Route path="/location" component={LocationView} />
       </Route>
