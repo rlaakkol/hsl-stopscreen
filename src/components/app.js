@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import { Link } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -26,13 +26,22 @@ const App = props =>
               Listaa pysäkit
             </NavItem>
           </LinkContainer>
-          <LinkContainer to="/location">
-            <NavItem
-              eventKey={1}
-            >
-              Paikanna
-            </NavItem>
-          </LinkContainer>
+          <NavDropdown title="Paikanna" id="nav-dropdown">
+            <LinkContainer to="/location?dia=0.001">
+              <MenuItem
+                eventKey={'2.1'}
+              >
+                Säde 0.001
+              </MenuItem>
+            </LinkContainer>
+            <LinkContainer to="/location?dia=0.005">
+              <MenuItem
+                eventKey={'2.2'}
+              >
+                Säde 0.005
+              </MenuItem>
+            </LinkContainer>
+          </NavDropdown>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
