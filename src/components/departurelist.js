@@ -14,22 +14,19 @@ const DepartureList = props => {
     )
   }
 
+  const flattenDepartures = (acc, departure) =>
+    acc.concat(
+      departure.stoptimes.map(stoptime => ({
+        stop: stoptime.stop.name,
+        line: departure.pattern.name,
+        time: stoptime.serviceDay + stoptime.realtimeDeparture,
+        isRealtime: stoptime.realtime
+      }))
+    )
+
   const list = props.stops.reduce(
     (acc, stop) =>
-      acc.concat(
-        stop.stoptimesForPatterns.reduce(
-          (acc2, departure) =>
-            acc2.concat(
-              departure.stoptimes.map(stoptime => ({
-                stop: stoptime.stop.name,
-                line: departure.pattern.name,
-                time: stoptime.serviceDay + stoptime.realtimeDeparture,
-                isRealtime: stoptime.realtime
-              }))
-            ),
-          []
-        )
-      ),
+      acc.concat(stop.stoptimesForPatterns.reduce(flattenDepartures, [])),
     []
   )
 
