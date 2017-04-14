@@ -1,37 +1,37 @@
-import React from 'react';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
-import { Table } from 'react-bootstrap';
-import moment from 'moment';
+import React from 'react'
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
+import { Table } from 'react-bootstrap'
+import moment from 'moment'
 
 // import * as Actions from '../actions';
 
-const DepartureList = (props) => {
-  const formatTime = tstamp => moment.unix(tstamp).format('HH:mm');
+const DepartureList = props => {
+  const formatTime = tstamp => moment.unix(tstamp).format('HH:mm')
 
   const list = props.data.loading
     ? []
-    : props.data.stops.reduce((acc, stop) =>
-        acc.concat(
-          stop.stoptimesForPatterns.reduce((acc2, departure) =>
-            acc2.concat(
-              departure.stoptimes.map(stoptime =>
-                ({
-                  stop: stoptime.stop.name,
-                  line: departure.pattern.name,
-                  time: stoptime.serviceDay + stoptime.realtimeDeparture,
-                  isRealtime: stoptime.realtime,
-                }),
-              ),
-            ),
-            [],
+    : props.data.stops.reduce(
+        (acc, stop) =>
+          acc.concat(
+            stop.stoptimesForPatterns.reduce(
+              (acc2, departure) =>
+                acc2.concat(
+                  departure.stoptimes.map(stoptime => ({
+                    stop: stoptime.stop.name,
+                    line: departure.pattern.name,
+                    time: stoptime.serviceDay + stoptime.realtimeDeparture,
+                    isRealtime: stoptime.realtime
+                  }))
+                ),
+              []
+            )
           ),
-        ),
-        [],
-      );
+        []
+      )
 
-  list.sort((a, b) => a.time - b.time);
-  const rows = list.map((departure, i) =>
+  list.sort((a, b) => a.time - b.time)
+  const rows = list.map((departure, i) => (
     <tr key={i}>
       <td>
         {departure.stop}
@@ -40,22 +40,26 @@ const DepartureList = (props) => {
         {departure.line}
       </td>
       <td>
-        {formatTime(departure.time)} {departure.isRealtime ? <i className="fa fa-rss" aria-hidden="true" /> : ''}
+        {formatTime(departure.time)}
+        {' '}
+        {departure.isRealtime
+          ? <i className="fa fa-rss" aria-hidden="true" />
+          : ''}
       </td>
-    </tr>,
-  );
+    </tr>
+  ))
   return (
     <Table>
       <tbody>
         {rows}
       </tbody>
     </Table>
-  );
-};
+  )
+}
 
 DepartureList.propTypes = {
-  data: React.PropTypes.object,
-};
+  data: React.PropTypes.object
+}
 
 const StopQuery = gql`
 query StopQuery($ids: [String]!, $time: Long!, $nstoptimes: Int!) {
@@ -90,6 +94,6 @@ query StopQuery($ids: [String]!, $time: Long!, $nstoptimes: Int!) {
       }
     }
   }
-`;
+`
 
-export default graphql(StopQuery)(DepartureList);
+export default graphql(StopQuery)(DepartureList)

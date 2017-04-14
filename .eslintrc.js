@@ -1,6 +1,7 @@
 module.exports = {
     "extends": [
       "airbnb",
+      "plugin:react/recommended",
       "prettier",
       "prettier/react"
   ],
@@ -19,6 +20,7 @@ module.exports = {
         "react/no-unused-prop-types": "off",
         "no-bitwise": "off",
         "react/forbid-prop-types": "off",
-        "prettier/prettier": "error"
+        "quotes": ["error", "single"],
+        "semi": ["error", "never"]
     }
 };

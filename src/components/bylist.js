@@ -1,15 +1,16 @@
-import React from 'react';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import React from 'react'
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 
-import DepartureList from './departurelist';
+import DepartureList from './departurelist'
 
-const DeparturesByStopList = props =>
-  <DepartureList loading={props.data.loading} stops={props.data.stops} />;
+const DeparturesByStopList = props => (
+  <DepartureList loading={props.data.loading} stops={props.data.stops} />
+)
 
 DeparturesByStopList.propTypes = {
-  data: React.PropTypes.object,
-};
+  data: React.PropTypes.object
+}
 
 const StopQuery = gql`
 query StopQuery($ids: [String]!, $time: Long!, $nstoptimes: Int!) {
@@ -44,6 +45,6 @@ query StopQuery($ids: [String]!, $time: Long!, $nstoptimes: Int!) {
       }
     }
   }
-`;
+`
 
-export default graphql(StopQuery)(DeparturesByStopList);
+export default graphql(StopQuery)(DeparturesByStopList)

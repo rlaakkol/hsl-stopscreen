@@ -1,15 +1,16 @@
-import React from 'react';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import React from 'react'
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 
-import DepartureList from './departurelist';
+import DepartureList from './departurelist'
 
-const DeparturesByLocation = props =>
-  <DepartureList loading={props.data.loading} stops={props.data.stopsByBbox} />;
+const DeparturesByLocation = props => (
+  <DepartureList loading={props.data.loading} stops={props.data.stopsByBbox} />
+)
 
 DeparturesByLocation.propTypes = {
-  data: React.PropTypes.object,
-};
+  data: React.PropTypes.object
+}
 
 const LocationQuery = gql`
 query LocationQuery($minLat: Float!, $maxLat: Float!, $minLon: Float!, $maxLon: Float!, $time: Long!, $nstoptimes: Int!){
@@ -48,6 +49,6 @@ query LocationQuery($minLat: Float!, $maxLat: Float!, $minLon: Float!, $maxLon: 
     }
   }
 }
-`;
+`
 
-export default graphql(LocationQuery)(DeparturesByLocation);
+export default graphql(LocationQuery)(DeparturesByLocation)

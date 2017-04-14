@@ -1,14 +1,12 @@
-import React from 'react';
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
-import { Link } from 'react-router';
-import { LinkContainer } from 'react-router-bootstrap';
+import React from 'react'
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
+import { Link } from 'react-router'
+import { LinkContainer } from 'react-router-bootstrap'
 
-const App = props =>
+const App = props => (
   <div>
     {props.children}
-    <Navbar
-      fixedBottom
-    >
+    <Navbar fixedBottom>
       <Navbar.Header>
         <Link to="/">
           <Navbar.Brand>
@@ -20,24 +18,18 @@ const App = props =>
       <Navbar.Collapse>
         <Nav>
           <LinkContainer to="/list">
-            <NavItem
-              eventKey={1}
-            >
+            <NavItem eventKey={1}>
               Listaa pysäkit
             </NavItem>
           </LinkContainer>
           <NavDropdown title="Paikanna" id="nav-dropdown">
             <LinkContainer to="/location?dia=0.001">
-              <MenuItem
-                eventKey={'2.1'}
-              >
+              <MenuItem eventKey={'2.1'}>
                 Säde 0.001
               </MenuItem>
             </LinkContainer>
             <LinkContainer to="/location?dia=0.005">
-              <MenuItem
-                eventKey={'2.2'}
-              >
+              <MenuItem eventKey={'2.2'}>
                 Säde 0.005
               </MenuItem>
             </LinkContainer>
@@ -45,10 +37,11 @@ const App = props =>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
-  </div>;
+  </div>
+)
 
 App.propTypes = {
-  children: React.PropTypes.element,
-};
+  children: React.PropTypes.element
+}
 
-export default App;
+export default App
